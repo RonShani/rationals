@@ -328,6 +328,17 @@ int test_plus_plus_operator()
     }
     return fails;
 }
+Rational test_sum()
+{
+    Rational rational_numbers[4] = {Rational(1,4), Rational(1,8), Rational(-1,16), Rational(10,2)};
+    Rational sum_result = sum(rational_numbers, 4);
+    int i=0;
+    std::cout << rational_numbers[i++] <<" + ";
+    std::cout << rational_numbers[i++] <<" + ";
+    std::cout << rational_numbers[i++] <<" + ";
+    std::cout << rational_numbers[i++] <<" == "<< sum_result;
+    return sum_result;
+}
 int main()
 {
     Rational ten(20, 2);
@@ -438,5 +449,13 @@ int main()
         Pass();
     }
     test_swap();
+    Title("testing sum");
+    if(Rational(85,16) != test_sum()){
+        Fail();
+        fails++;
+    }
+    else{
+        Pass();
+    }
     return fails;
 }

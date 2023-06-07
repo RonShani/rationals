@@ -176,31 +176,6 @@ bool Rational::operator>=(const Rational &a_second)
     return *this > a_second || *this == a_second;
 }
 
-// recieves an array of Rationals and it's size as arguments
-// and returns the sum of all as decimal fraction
-double sumd(Rational const *a_rational_array, size_t a_size)
-{
-    Rational rational_sum = sum(a_rational_array, a_size);
-    return rational_sum.value();
-}
-
-//recieves an array of Rationals and it's size as arguments
-//and returns the sum of all Rational fraction reduced to it's smallest fraction
-//denomerator as possible
-Rational sum(Rational const *a_rational_array, size_t a_size)
-{
-    Rational sum(0,1);
-    if(a_rational_array == NULL){
-        return sum;
-    }
-    for (size_t i=0; i<a_size; i++){
-        sum += a_rational_array[i];
-    }
-    return sum;
-}
-
-
-
 //returns true if called object is not equal the Rational argument sent
 //or false otherwise
 bool operator!=(Rational a_first, Rational a_second)
@@ -286,7 +261,31 @@ void Rational::fix_negative_sign()
         this->m_numerator *= (-1);    
     }
 }
+
+// recieves an array of Rationals and it's size as arguments
+// and returns the sum of all as decimal fraction
+double sumd(Rational const *a_rational_array, size_t a_size)
+{
+    Rational rational_sum = sum(a_rational_array, a_size);
+    return rational_sum.value();
 }
+
+//recieves an array of Rationals and it's size as arguments
+//and returns the sum of all Rational fraction reduced to it's smallest fraction
+//denomerator as possible
+Rational sum(Rational const *a_rational_array, size_t a_size)
+{
+    Rational sum(0,1);
+    if(a_rational_array == NULL){
+        return sum;
+    }
+    for (size_t i=0; i<a_size; i++){
+        sum += a_rational_array[i];
+    }
+    return sum;
+}
+
+}//namespace alg_rational
 
 static void swap_int(int &a, int &b)
 {
