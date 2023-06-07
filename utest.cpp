@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "rational.hpp"
+using namespace alg_rational;
 
 void Fail()
 {
@@ -31,11 +32,11 @@ int test_create()
     Rational zero(0,1);
     Rational no_args;
     std::cout <<"\ncreated: "<< zero << one << no_args <<" ...";
-    if (equal_to(zero, one)){
+    if (zero == one){
         fails++;
         Fail();
     }
-    if (equal_to(no_args, one) || not_equal_to(zero, no_args)){
+    if (no_args == one || zero != no_args){
         fails++;
     }
     return fails;
@@ -47,46 +48,24 @@ int test_add()
     Rational qrtr(1,4);
     Rational half(1,2);
     Rational zero;
-    Rational result = qrtr.add(half);
-    std::cout << "\n" << qrtr << " + " << half << " == " << result;
-    if(not_equal_to(Rational(3,4),result)){
-        fails++;
-    }
-    result = zero.add(zero);
-    std::cout << "\n" << zero << " + " << zero << " == " << result;
-    if(not_equal_to(Rational(0,1),result)){
-        fails++;
-    }
-    result = zero.add(half);
-    std::cout << "\n" << zero << " + " << half << " == " << result;
-    if(not_equal_to(Rational(1,2),result)){
-        fails++;
-    }
-    return fails;
-}
-int test_add_using_operator()
-{
-    int fails = 0;
-    Rational qrtr(1,4);
-    Rational half(1,2);
-    Rational zero;
     Rational result = qrtr + half;
     std::cout << "\n" << qrtr << " + " << half << " == " << result;
-    if(not_equal_to(Rational(3,4),result)){
+    if(Rational(3,4)!=result){
         fails++;
     }
-    result = zero +zero;
+    result = zero+zero;
     std::cout << "\n" << zero << " + " << zero << " == " << result;
-    if(not_equal_to(Rational(0,1),result)){
+    if(Rational(0,1)!=result){
         fails++;
     }
-    result = zero +half;
+    result = zero+half;
     std::cout << "\n" << zero << " + " << half << " == " << result;
-    if(not_equal_to(Rational(1,2),result)){
+    if(Rational(1,2)!=result){
         fails++;
     }
     return fails;
 }
+
 int test_add_to()
 {
     int fails = 0;
@@ -96,7 +75,7 @@ int test_add_to()
     std::cout << "\n" << qrtr << " += " << half << " == ";
     qrtr += half;
     std::cout << qrtr;
-    if(not_equal_to(Rational(3,4),qrtr)){
+    if(Rational(3,4)!=qrtr){
         fails++;
     }
     return fails;
@@ -131,31 +110,31 @@ int test_reduce()
     std::cout << qrtr << " reduced to ==> ";
     qrtr.reduce();
     std::cout << qrtr << "\n";
-    if(not_equal_to(Rational(-1,4),qrtr)){
+    if(Rational(-1,4)!=qrtr){
         fails++;
     }
     std::cout << half << " reduced to ==> ";
     half.reduce();
     std::cout << half << "\n";
-    if(not_equal_to(Rational(1,2),half)){
+    if(Rational(1,2)!=half){
         fails++;
     }
     std::cout << third << " reduced to ==> ";
     third.reduce();
     std::cout << third << "\n";
-    if(not_equal_to(Rational(1,3),third)){
+    if(Rational(1,3)!=third){
         fails++;
     }
     std::cout << zero << " reduced to ==> ";
     zero.reduce();
     std::cout << zero << "\n";
-    if(not_equal_to(Rational(0,3),zero)){
+    if(Rational(0,3)!=zero){
         fails++;
     }
     std::cout << negative_both << " reduced to ==> ";
     negative_both.reduce();
     std::cout << negative_both << "\n";
-    if(not_equal_to(Rational(-4,21),negative_both)){
+    if(Rational(-4,21)!=negative_both){
         fails++;
     }
     return fails;
@@ -168,19 +147,19 @@ int test_mult()
     Rational half(1,2);
     Rational zero;
     Rational negative(20,-105);
-    Rational result = qrtr.mul(half);
+    Rational result = qrtr *half;
     std::cout << "\n" << qrtr << " * " << half << " == " << result;
-    if(not_equal_to(Rational(1,8),result)){
+    if(Rational(1,8)!=result){
         fails++;
     }
-    result = zero.mul(zero);
+    result = zero*zero;
     std::cout << "\n" << zero << " * " << zero << " == " << result;
-    if(not_equal_to(Rational(0,1),result)){
+    if(Rational(0,1)!=result){
         fails++;
     }
-    result = half.mul(negative);
+    result = half*negative;
     std::cout << "\n" << half << " * " << negative << " == " << result;
-    if(not_equal_to(Rational(-20,210),result)){
+    if(Rational(-20,210)!=result){
         fails++;
     }
     return fails;
@@ -193,9 +172,9 @@ int test_div()
     Rational half(1,2);
     Rational zero;
     Rational negative(20,-105);
-    Rational result = qrtr.div(half);
+    Rational result = qrtr/half;
     std::cout << "\n" << qrtr << " : " << half << " == " << result;
-    if(not_equal_to(Rational(1,2),result)){
+    if(Rational(1,2) != result){
         fails++;
     }
     /* tested ok
@@ -207,14 +186,14 @@ int test_div()
         std::cout << e << "\n";
     }
     */
-    result = zero.div(half);
+    result = zero/half;
     std::cout << "\n" << zero << " : " << half << " == " << result;
-    if(not_equal_to(Rational(0,1),result)){
+    if(Rational(0,1)!=result){
         fails++;
     }
-    result = half.div(negative);
+    result = half/negative;
     std::cout << "\n" << half << " : " << negative << " == " << result;
-    if(not_equal_to(Rational(-105,40),result)){
+    if(Rational(-105,40)!=result){
         fails++;
     }
     return fails;
@@ -231,19 +210,19 @@ int test_inverse()
     std::cout << negative_both << " inverse to ==> ";
     negative_both.inverse();
     std::cout << negative_both << "\n";
-    if(not_equal_to(Rational(-105,20),negative_both)){
+    if(Rational(-105,20)!=negative_both){
         fails++;
     }
     std::cout << half << " inverse to ==> ";
     half.inverse();
     std::cout << half << "\n";
-    if(not_equal_to(Rational(2,1),half)){
+    if(Rational(2,1)!=half){
         fails++;
     }
     std::cout << third << " inverse to ==> ";
     third.inverse();
     std::cout << third << "\n";
-    if(not_equal_to(Rational(9,3),third)){
+    if(Rational(9,3)!=third){
         fails++;
     }
 /*  tested ok
@@ -259,7 +238,7 @@ int test_inverse()
     std::cout << qrtr << " inverse to ==> ";
     qrtr.inverse();
     std::cout << qrtr << "\n";
-    if(not_equal_to(Rational(-4,1),qrtr)){
+    if(Rational(-4,1)!=qrtr){
         fails++;
     }
     return fails;
@@ -271,19 +250,19 @@ int test_sub()
     Rational half(1,2);
     Rational negative(-20,105);
     Rational zero;
-    Rational result = qrtr.sub(half);
+    Rational result = qrtr-half;
     std::cout << "\n" << qrtr << " - " << half << " == " << result;
-    if(not_equal_to(Rational(-1,4),result)){
+    if(Rational(-1,4)!=result){
         fails++;
     }
-    result = zero.sub(negative);
+    result = zero-negative;
     std::cout << "\n" << zero << " - " << negative << " == " << result;
-    if(not_equal_to(Rational(20,105),result)){
+    if(Rational(20,105)!=result){
         fails++;
     }
-    result = negative.sub(half);
+    result = negative-half;
     std::cout << "\n" << negative << " - " << half << " == " << result;
-    if(not_equal_to(Rational(-145,210),result)){
+    if(Rational(-145,210)!=result){
         fails++;
     }
     return fails;
@@ -291,8 +270,8 @@ int test_sub()
 
 int test_equal_to(Rational a_fraction_a, Rational a_fraction_b)
 {
-    std::cout <<"test_equal_to:"<< a_fraction_a <<" == "<< a_fraction_b<<" ? "<< equal_to_without_being_a_friend(a_fraction_a,a_fraction_b)<<"\n";
-    return equal_to_without_being_a_friend(a_fraction_a,a_fraction_b);
+    std::cout <<"test_equal_to:"<< a_fraction_a <<" == "<< a_fraction_b<<" ? "<< (a_fraction_a == a_fraction_b) <<"\n";
+    return a_fraction_a==a_fraction_b;
 }
 
 void test_swap()
@@ -302,6 +281,52 @@ void test_swap()
     std::cout << "\ninversing using swap method: " << qrtr << " ==> ";
     qrtr.inverse_using_swap();
     std::cout << qrtr <<"\n";
+}
+int test_plus_plus_operator()
+{
+    int fails = 0;
+    Rational qrtr(1,-4);
+    Rational half(1,2);
+    Rational third(3,9);
+    Rational zero;
+    Rational negative_both(-20,105);
+    std::cout << qrtr << " ++ ==> ";
+    ++qrtr;
+    std::cout << qrtr << "\n";
+    if(Rational(3,4)!=qrtr){
+        fails++;
+    }
+    std::cout << qrtr << "--post ==> ";
+    qrtr--;
+    std::cout << qrtr << "\n";
+    if(Rational(-1,4)!=qrtr){
+        fails++;
+    }
+    std::cout << " --pre " << qrtr << " ==> ";
+    --qrtr;
+    std::cout << qrtr << "\n";
+    if(Rational(-5,4)!=qrtr){
+        fails++;
+    }
+    std::cout << half << " ++ to ==> ";
+    ++half;
+    std::cout << half << "\n";
+    if(Rational(3,2)!=half){
+        fails++;
+    }
+    std::cout << third << " ++ to ==> ";
+    third++;
+    std::cout << third << "\n";
+    if(Rational(4,3)!=third){
+        fails++;
+    }
+    std::cout << zero << " ++ to ==> ";
+    zero++;
+    std::cout << zero << "\n";
+    if(Rational(1,1)!=zero){
+        fails++;
+    }
+    return fails;
 }
 int main()
 {
@@ -317,7 +342,7 @@ int main()
     else{
         Pass();
     }
-    Title("testing add");
+    Title("testing +");
     if((this_test_fail = test_add())){
         Fail();
         fails += this_test_fail;
@@ -325,16 +350,24 @@ int main()
     else{
         Pass();
     }
-    Title("testing add using + operator");
-    if((this_test_fail = test_add_using_operator())){
+    Title("testing +=)");
+    if((this_test_fail = test_add_to())){
         Fail();
         fails += this_test_fail;
     }
     else{
         Pass();
     }
-    Title("testing add_to");
-    if((this_test_fail = test_add_to())){
+    Title("testing ++");
+    if((this_test_fail = test_plus_plus_operator())){
+        Fail();
+        fails += this_test_fail;
+    }
+    else{
+        Pass();
+    }
+    Title("testing -");
+    if((this_test_fail = test_sub())){
         Fail();
         fails += this_test_fail;
     }
@@ -357,7 +390,7 @@ int main()
     else{
         Pass();
     }  
-    Title("testing mult");
+    Title("testing *");
     if((this_test_fail = test_mult())){
         Fail();
         fails += this_test_fail;
@@ -365,7 +398,7 @@ int main()
     else{
         Pass();
     }
-    Title("testing div");
+    Title("testing /");
     if((this_test_fail = test_div())){
         Fail();
         fails += this_test_fail;
@@ -381,14 +414,7 @@ int main()
     else{
         Pass();
     } 
-    Title("testing sub");
-    if((this_test_fail = test_sub())){
-        Fail();
-        fails += this_test_fail;
-    }
-    else{
-        Pass();
-    }
+
     int results_array[] = {0,1,0,0,1};
     int results_recieved[] = {
         test_equal_to(Rational(2,8),Rational(1,5)),
